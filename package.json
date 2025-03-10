@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "name": "react-supabase-auth-crud",
+=======
+  "name": "my-app",
+>>>>>>> 568b175 (update)
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,14 +14,28 @@
     "preview": "vite preview"
   },
   "dependencies": {
+<<<<<<< HEAD
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
+=======
+    "@supabase/auth-ui-react": "^0.4.7",
+    "@supabase/auth-ui-shared": "^0.1.8",
+    "@supabase/supabase-js": "^2.49.1",
+    "dotenv": "^16.4.7",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router": "^7.3.0"
+>>>>>>> 568b175 (update)
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
+<<<<<<< HEAD
     "@vitejs/plugin-react-swc": "^3.8.0",
+=======
+    "@vitejs/plugin-react": "^4.3.4",
+>>>>>>> 568b175 (update)
     "eslint": "^9.21.0",
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.19",
