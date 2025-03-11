@@ -1,10 +1,18 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../db/db'
+import { useNavigate } from 'react-router-dom'
 
-function App() {
+function Instruments() {
   const [instruments, setInstruments] = useState([])
+  const navigate = useNavigate()
 
   useEffect(() => {
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (!session) {
+        navigate('/login')
+        console.log(session)
+      }
+    })
     getInstruments()
   }, [])
 
@@ -22,4 +30,4 @@ function App() {
   )
 }
 
-export default App
+export default Instruments
