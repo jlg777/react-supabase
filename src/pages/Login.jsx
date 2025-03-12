@@ -13,7 +13,7 @@ const Login = () => {
       const { data, error } = await supabase.auth.signInWithOtp({
         email,
         options: {
-          emailRedirectTo: 'https://localhost.3000/instruments'
+          emailRedirectTo: 'https://react-supabase-phi.vercel.app/instruments'
         }
       })
       //console.log(data)
