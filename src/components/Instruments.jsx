@@ -24,12 +24,12 @@ function Instruments() {
 
   return (
     <>
+      <div>Instruments</div>
       <ul>
         {instruments.map((instrument) => (
           <li key={instrument.name}>{instrument.name}</li>
         ))}
       </ul>
-      <TaskForm />
     </>
   )
 }

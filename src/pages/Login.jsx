@@ -11,43 +11,54 @@ const Login = () => {
     e.preventDefault()
     try {
       const { data, error } = await supabase.auth.signInWithOtp({
-        email,
-        options: {
-          emailRedirectTo: 'https://react-supabase-phi.vercel.app/instruments'
-        }
+        email
       })
-      //console.log(data)
-    } catch (error) {}
-    console.error(error)
-    //console.log('Email enviado:', email)
+      if (error) {
+        throw error
+      }
+      // Si la solicitud fue exitosa
+      alert('Su correo fue enviado, favor revise su casilla de email')
+      setEmail('') // Limpia el campo de correo
+    } catch (error) {
+      console.error(error)
+      alert('Hubo un error al enviar el correo. Intente nuevamente.')
+    }
   }
 
-  const handleOnchange = (e) => {
-    //console.log(e.target.value)
+  const handleOnChange = (e) => {
     setEmail(e.target.value)
   }
 
   useEffect(() => {
-    supabase.auth.onAuthStateChange((event, session) => {
+    // Escucha los cambios de estado de autenticación
+    const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
       if (session) {
-        navigate('/instruments')
+        navigate('/instruments') // Redirige a la página de instrumentos si el usuario está autenticado
       }
     })
-  }, [])
+
+    // Cleanup listener cuando el componente se desmonte
+    return () => {
+      listener.unsubscribe()
+    }
+  }, [navigate])
 
   return (
     <>
+      <div>Login</div>
       <form onSubmit={handleSubmit}>
         <input
           type="email"
-          name=""
-          id=""
+          name="email"
+          id="email"
           placeholder="Ingrese su email"
-          onChange={handleOnchange}
+          value={email} // Asegúrate de que el valor del input esté vinculado al estado
+          onChange={handleOnChange}
         />
-        <button>Enviar</button>
+        <button type="submit">Enviar</button>
       </form>
     </>
   )
 }
+
 export default Login
