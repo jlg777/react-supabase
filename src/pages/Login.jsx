@@ -31,16 +31,11 @@ const Login = () => {
 
   useEffect(() => {
     // Escucha los cambios de estado de autenticación
-    const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
+    const { data } = supabase.auth.onAuthStateChange((event, session) => {
       if (session) {
         navigate('/instruments') // Redirige a la página de instrumentos si el usuario está autenticado
       }
     })
-
-    // Cleanup listener cuando el componente se desmonte
-    return () => {
-      listener.unsubscribe()
-    }
   }, [navigate])
 
   return (
