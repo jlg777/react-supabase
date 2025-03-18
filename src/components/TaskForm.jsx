@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { supabase } from '../db/db'
+import TaskList from './TaskList'
 
 const TaskForm = () => {
   const [taskname, setTaskname] = useState('') // Estado para el nombre de la tarea
@@ -65,6 +66,7 @@ const TaskForm = () => {
       </form>
       {user && <p>Usuario logueado: {user.id}</p>}
       {user && <p>Email logueado: {user.email}</p>}
+      <TaskList />
     </>
   )
 }
