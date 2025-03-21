@@ -15,7 +15,7 @@ const TaskForm = () => {
         console.error('Error obteniendo el usuario:', error) // Manejo de errores si ocurre algún problema
       } else {
         setUser(data.user) // Si se obtiene el usuario, lo almacenamos en el estado
-        console.log(data.user) // Imprimir los datos del usuario en la consola
+        //console.log(data.user) // Imprimir los datos del usuario en la consola
       }
     }
 
