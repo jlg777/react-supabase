@@ -1,9 +1,14 @@
-import { useContext } from 'react'
-import { TaskContext } from '../context/TaskContext.jsx'
+import { useEffect } from 'react'
+import { useTask } from '../hook/useTask.js'
 
 const TaskList = () => {
-  const { task, setTask } = useContext(TaskContext) // Accede al valor del contexto
-  console.log(task)
+  const { task, getTask } = useTask()
+  //console.log(task)
+
+  useEffect(() => {
+    getTask()
+  }, [])
+
   return <>task</>
 }
 export default TaskList
