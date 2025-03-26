@@ -1,17 +1,23 @@
 'use client'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { supabase } from '../db/db'
 import TaskList from './TaskList'
 import { useTask } from '../hook/useTask'
 
 const TaskForm = () => {
   const { user } = useTask()
+  const [taskname, setTaskname] = useState('') // Estado para almacenar el nombre de la tarea
 
   useEffect(() => {}, [])
 
   // Función para manejar el envío del formulario
-  /*const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
+
+    if (!taskname.trim()) {
+      alert('Por favor, ingresa un nombre para la tarea')
+      return
+    }
 
     try {
       // Insertamos la tarea en la tabla "tareas"
@@ -31,7 +37,7 @@ const TaskForm = () => {
       console.error('Error en la inserción:', error)
       alert('Error al agregar la tarea')
     }
-  }*/
+  }
 
   // Función para manejar el cambio en el input de tarea
   const handleClick = (e) => {
@@ -41,13 +47,13 @@ const TaskForm = () => {
   return (
     <>
       <h2>Formulario de Tarea</h2>
-      <form>
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
           name="taskname"
           placeholder="Escribe el nombre de la tarea"
-          //value={taskname} // Vinculamos el valor del input con el estado
-          //onChange={handleClick} // Actualizar el estado con el valor del input
+          value={taskname} // Vinculamos el valor del input con el estado
+          onChange={handleClick} // Actualizar el estado con el valor del input
         />
         <button type="submit">Enviar</button>
       </form>

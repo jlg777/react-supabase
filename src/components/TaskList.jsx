@@ -3,7 +3,7 @@ import { useTask } from '../hook/useTask.js'
 
 const TaskList = () => {
   const { task } = useTask()
-  console.log(task)
+  //console.log(task)
 
   return <>Tareas: {task == null ? task : 'No hay tareas'}</>
 }
