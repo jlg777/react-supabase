@@ -17,16 +17,17 @@ function Instruments() {
   }, [])
 
   async function getInstruments() {
-    const { data } = await supabase.from('instruments').select()
+    const { data } = await supabase.from('tareas').select()
     setInstruments(data)
   }
+  console.log(instruments)
 
   return (
     <>
       <div>Instruments</div>
       <ul>
         {instruments.map((instrument) => (
-          <li key={instrument.name}>{instrument.name}</li>
+          <li key={instrument.id}>{instrument.name}</li>
         ))}
       </ul>
     </>
