@@ -1,11 +1,10 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { supabase } from '../db/db'
 import TaskList from './TaskList'
 import { useTask } from '../hook/useTask'
 
 const TaskForm = () => {
-  const { user } = useTask()
+  const { user, createTask } = useTask()
   const [taskname, setTaskname] = useState('') // Estado para almacenar el nombre de la tarea
 
   useEffect(() => {}, [])
@@ -17,25 +16,9 @@ const TaskForm = () => {
     if (!taskname.trim()) {
       alert('Por favor, ingresa un nombre para la tarea')
       return
-    }
-
-    try {
-      // Insertamos la tarea en la tabla "tareas"
-      const { data, error } = await supabase
-        .from('tareas')
-        .insert([{ name: taskname, userid: user.id }])
-
-      if (error) {
-        console.error('Error al insertar tarea:', error)
-        alert('Error al agregar la tarea') // Si hay un error, mostrar alert
-      } else {
-        console.log('Tarea insertada con éxito:', taskname)
-        alert(`Tarea '${taskname}' cargada con éxito!`) // Mostrar alert con la tarea cargada
-        setTaskname('') // Limpiar el input después de la inserción exitosa
-      }
-    } catch (error) {
-      console.error('Error en la inserción:', error)
-      alert('Error al agregar la tarea')
+    } else {
+      createTask(taskname)
+      setTaskname('') // Limpiar el input después de la inserción exitosa
     }
   }
 
