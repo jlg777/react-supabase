@@ -2,9 +2,40 @@ import { useEffect } from 'react'
 import { useTask } from '../hook/useTask.js'
 
 const TaskList = () => {
-  const { task } = useTask()
-  //console.log(task)
+  const { task, getTask } = useTask() // Asegúrate de que `getTask` esté disponible en el contexto.
 
-  return <>Tareas: {task == null ? task : 'No hay tareas'}</>
+  // Verificamos si `task` es null o un array vacío
+  const renderTasks = () => {
+    if (task === null || task.length === 0) {
+      return <div>No hay tareas</div>
+    }
+
+    // Si hay tareas, las mostramos
+    return (
+      <ul>
+        {task.map((task) => (
+          <li key={task.id}>
+            {/* Asegúrate de que cada tarea tenga un identificador único y un nombre */}
+            {task.name || 'Tarea sin nombre'}{' '}
+            {/* Si no hay un nombre, se muestra un texto por defecto */}
+          </li>
+        ))}
+      </ul>
+    )
+  }
+
+  useEffect(() => {
+    if (!task || task.length === 0) {
+      getTask() // Llama a `getTask` para obtener las tareas solo si aún no existen
+    }
+  }, [task]) // `getTask` se ejecutará cuando el estado `task` cambie
+
+  return (
+    <div>
+      <h2>Tareas:</h2>
+      {renderTasks()}
+    </div>
+  )
 }
+
 export default TaskList
