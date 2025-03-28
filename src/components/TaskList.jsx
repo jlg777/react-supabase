@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useTask } from '../hook/useTask.js'
+import TaskCard from './TaskCard.jsx'
 
 const TaskList = () => {
   const { task, getTask } = useTask() // Asegúrate de que `getTask` esté disponible en el contexto.
@@ -16,7 +17,8 @@ const TaskList = () => {
         {task.map((task) => (
           <li key={task.id}>
             {/* Asegúrate de que cada tarea tenga un identificador único y un nombre */}
-            {task.name || 'Tarea sin nombre'}{' '}
+            <TaskCard task={task} />
+
             {/* Si no hay un nombre, se muestra un texto por defecto */}
           </li>
         ))}
@@ -28,6 +30,7 @@ const TaskList = () => {
     if (!task || task.length === 0) {
       getTask() // Llama a `getTask` para obtener las tareas solo si aún no existen
     }
+    console.log(task)
   }, [task]) // `getTask` se ejecutará cuando el estado `task` cambie
 
   return (
