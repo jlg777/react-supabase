@@ -30,6 +30,7 @@ export const TaskContextProvider = ({ children }) => {
       } else {
         setTask(data) // Actualiza el estado con las tareas obtenidas
       }
+      //console.log(data)
     }
   }
 
@@ -49,6 +50,42 @@ export const TaskContextProvider = ({ children }) => {
     } catch (error) {
       console.error('Error en la inserción:', error)
       alert('Error al agregar la tarea')
+    }
+  }
+
+  const onComplete = async (id) => {
+    try {
+      const { data, error } = await supabase
+        .from('tareas')
+        .update({ isDone: true })  // Marcar como completada
+        .eq('id', id)
+        .select()
+
+      if (error) {
+        console.error('Error al completar la tarea:', error)
+      } else {
+        setTask(task.map(t => t.id === id ? { ...t, isDone: true } : t)) // Actualizar en el estado
+      }
+    } catch (error) {
+      console.error('Error en onComplete:', error)
+    }
+  }
+
+  // Eliminar tarea
+  const onDelete = async (id) => {
+    try {
+      const { error } = await supabase
+        .from('tareas')
+        .delete()
+        .eq('id', id)
+
+      if (error) {
+        console.error('Error al eliminar la tarea:', error)
+      } else {
+        setTask(task.filter(t => t.id !== id)) // Quitar del estado
+      }
+    } catch (error) {
+      console.error('Error en onDelete:', error)
     }
   }
 
@@ -72,7 +109,9 @@ export const TaskContextProvider = ({ children }) => {
   //console.log(task)
 
   return (
-    <TaskContext.Provider value={{ task, getTask, user, getUser, createTask }}>
+    <TaskContext.Provider
+      value={{ task, getTask, user, getUser, createTask, onComplete, onDelete }}
+    >
       {children}
     </TaskContext.Provider>
   )

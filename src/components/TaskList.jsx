@@ -3,7 +3,7 @@ import { useTask } from '../hook/useTask.js'
 import TaskCard from './TaskCard.jsx'
 
 const TaskList = () => {
-  const { task, getTask } = useTask() // Asegúrate de que `getTask` esté disponible en el contexto.
+  const { task, getTask, onComplete, onDelete } = useTask() // Asegúrate de que `getTask` esté disponible en el contexto.
 
   // Verificamos si `task` es null o un array vacío
   const renderTasks = () => {
@@ -17,7 +17,7 @@ const TaskList = () => {
         {task.map((task) => (
           <li key={task.id}>
             {/* Asegúrate de que cada tarea tenga un identificador único y un nombre */}
-            <TaskCard task={task} />
+            <TaskCard task={task} onComplete={onComplete} onDelete={onDelete} />
 
             {/* Si no hay un nombre, se muestra un texto por defecto */}
           </li>
@@ -30,7 +30,7 @@ const TaskList = () => {
     if (!task || task.length === 0) {
       getTask() // Llama a `getTask` para obtener las tareas solo si aún no existen
     }
-    console.log(task)
+    //console.log(task)
   }, [task]) // `getTask` se ejecutará cuando el estado `task` cambie
 
   return (
