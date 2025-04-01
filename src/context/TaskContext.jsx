@@ -24,7 +24,7 @@ export const TaskContextProvider = ({ children }) => {
   // Obtener tareas solo si el usuario está disponible
   const getTask = async () => {
     if (user && user.id) {
-      const { data, error } = await supabase.from('tareas').select().eq('userid', user.id)
+      const { data, error } = await supabase.from('tareas').select().eq('user_id', user.id)
       if (error) {
         console.error('Error obteniendo las tareas:', error) // Manejo de errores
       } else {
@@ -39,7 +39,7 @@ export const TaskContextProvider = ({ children }) => {
       // Insertamos la tarea en la tabla "tareas"
       const { data, error } = await supabase
         .from('tareas')
-        .insert([{ name: taskname, userid: user.id }])
+        .insert([{ name: taskname, user_id: user.id }])
       if (error) {
         console.error('Error al insertar tarea:', error)
         alert('Error al agregar la tarea') // Si hay un error, mostrar alert
