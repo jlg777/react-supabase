@@ -55,16 +55,20 @@ export const TaskContextProvider = ({ children }) => {
 
   const onComplete = async (id) => {
     try {
+      // Buscar la tarea específica por id
+      const tarea = task.find((t) => t.id === id)
+      if (!tarea) return // Si no la encuentra, salir
+
       const { data, error } = await supabase
         .from('tareas')
-        .update({ isDone: true })  // Marcar como completada
+        .update({ isDone: !tarea.isDone }) // Cambiar el estado actual
         .eq('id', id)
         .select()
 
       if (error) {
         console.error('Error al completar la tarea:', error)
       } else {
-        setTask(task.map(t => t.id === id ? { ...t, isDone: true } : t)) // Actualizar en el estado
+        setTask(task.map((t) => (t.id === id ? { ...t, isDone: !t.isDone } : t))) // Actualizar en el estado
       }
     } catch (error) {
       console.error('Error en onComplete:', error)
@@ -74,15 +78,12 @@ export const TaskContextProvider = ({ children }) => {
   // Eliminar tarea
   const onDelete = async (id) => {
     try {
-      const { error } = await supabase
-        .from('tareas')
-        .delete()
-        .eq('id', id)
+      const { error } = await supabase.from('tareas').delete().eq('id', id)
 
       if (error) {
         console.error('Error al eliminar la tarea:', error)
       } else {
-        setTask(task.filter(t => t.id !== id)) // Quitar del estado
+        setTask(task.filter((t) => t.id !== id)) // Quitar del estado
       }
     } catch (error) {
       console.error('Error en onDelete:', error)
